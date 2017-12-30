@@ -2,21 +2,40 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
+const VIDEO_EXTENSIONS = require('./videoExtensions.json');
+
+const pathToFiles = path.join(__dirname, process.env['STASHED_DIR_PATH']);
 
 app.use(express.static(__dirname));
-app.use(express.static(__dirname + process.env['STASHED_DIR_PATH']));
+app.use(express.static(pathToFiles));
 
 app.get('/api/files', (req, res) => {
-  const pathToFiles = path.join(__dirname, process.env['STASHED_DIR_PATH']);
   fs.readdir(pathToFiles, (err, fileNames) => {
-    // Exclude dot files
-    const data = [];
+    let data = [];
+
     fileNames.forEach(fileName => {
-      if (fileName[0] !== '.') {
-        const pathName = `${process.env['STASHED_DIR_PATH']}/${fileName}`;
-        data.push({ pathName, fileName });
+      // Exclude dot files
+      if (fileName[0] === '.') {
+        return;
       }
+
+      const extension = fileName.split('.')[1];
+      const pathName = `${process.env['STASHED_DIR_PATH']}/${fileName}`;
+
+      // Exclude directories
+      if (typeof extension === 'undefined') {
+        return;
+      }
+
+      let fileData = { path: pathName, name: fileName };
+
+      if (VIDEO_EXTENSIONS.includes(extension)) {
+        fileData.type = 'video';
+      }
+
+      data.push(fileData);
     });
+
     return res.json(data);
   });
 });

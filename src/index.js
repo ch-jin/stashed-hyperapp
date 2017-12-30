@@ -2,16 +2,22 @@ import { h, app } from 'hyperapp';
 
 const appState = {
   files: [],
+  selectedFile: {
+    name: '',
+    path: '',
+    type: '',
+  },
 };
 
 const appActions = {
   fetchFile: () => state => fetch('/api/files').then(res => res.json()),
   replaceFile: files => ({ files }),
+  selectFile: file => ({ selectedFile: file }),
 };
 
 const view = (state, actions) => {
-  const { files } = state;
-  const { fetchFile, replaceFile } = actions;
+  const { files, selectedFile } = state;
+  const { fetchFile, replaceFile, selectFile } = actions;
 
   const fetchAndReceiveFile = () => fetchFile().then(data => replaceFile(data));
 
@@ -21,10 +27,32 @@ const view = (state, actions) => {
       <div oncreate={fetchAndReceiveFile}>
         {files.map(file => (
           <div>
-            <a href={file.pathName}>{file.fileName}</a>
+            <a
+              onclick={e => {
+                e.preventDefault();
+                selectFile(file);
+              }}
+              href={file.path}
+            >
+              {file.name}
+            </a>
           </div>
         ))}
       </div>
+      {selectedFile.type === 'video' && (
+        <video controls autoplay>
+          <source src={selectedFile.path} />
+          {selectedFile.subtitles && (
+            <track
+              default
+              label="English"
+              kind="subtitles"
+              srclang="en"
+              src="http://localhost:8080/media/kickass.vtt"
+            />
+          )}
+        </video>
+      )}
     </div>
   );
 };
