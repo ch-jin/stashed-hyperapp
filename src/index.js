@@ -23,6 +23,20 @@ const view = (state, actions) => {
 
   return (
     <div>
+      {selectedFile.type === 'video' && (
+        <video controls autoplay>
+          <source src={selectedFile.path} />
+          {selectedFile.subtitles && (
+            <track
+              default
+              label="English"
+              kind="subtitles"
+              srclang="en"
+              src="http://localhost:8080/media/kickass.vtt"
+            />
+          )}
+        </video>
+      )}
       <h1>Stashed</h1>
       <div oncreate={fetchAndReceiveFile}>
         {files.map(file => (
@@ -39,20 +53,6 @@ const view = (state, actions) => {
           </div>
         ))}
       </div>
-      {selectedFile.type === 'video' && (
-        <video controls autoplay>
-          <source src={selectedFile.path} />
-          {selectedFile.subtitles && (
-            <track
-              default
-              label="English"
-              kind="subtitles"
-              srclang="en"
-              src="http://localhost:8080/media/kickass.vtt"
-            />
-          )}
-        </video>
-      )}
     </div>
   );
 };
