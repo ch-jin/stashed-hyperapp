@@ -1,7 +1,4 @@
-/* global hyperapp, html, hyperx */
-
-const { h, app } = hyperapp;
-const html = hyperx(h);
+import { h, app } from 'hyperapp';
 
 const appState = {
   files: [],
@@ -16,21 +13,20 @@ const view = (state, actions) => {
   const { files } = state;
   const { fetchFile, replaceFile } = actions;
 
-  const fetchAndReceiveFile = () =>
-    fetchFile().then(data => replaceFile(data));
+  const fetchAndReceiveFile = () => fetchFile().then(data => replaceFile(data));
 
-  return html`
+  return (
     <div>
       <h1>Stashed</h1>
-      <div oncreate=${fetchAndReceiveFile}>
-        ${files.map(file => html`
+      <div oncreate={fetchAndReceiveFile}>
+        {files.map(file => (
           <div>
-            <a href=${file.pathName}>${file.fileName}</a>
+            <a href={file.pathName}>{file.fileName}</a>
           </div>
-        `)}
+        ))}
       </div>
     </div>
-  `;
+  );
 };
 
 app(appState, appActions, view, document.body);
