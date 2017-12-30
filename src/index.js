@@ -4,28 +4,28 @@ const { h, app } = hyperapp;
 const html = hyperx(h);
 
 const appState = {
-  fileNames: [],
+  files: [],
 };
 
 const appActions = {
-  fetchFileNames: () => state => fetch('/api/files').then(res => res.json()),
-  replaceFileNames: fileNames => ({ fileNames }),
+  fetchFile: () => state => fetch('/api/files').then(res => res.json()),
+  replaceFile: files => ({ files }),
 };
 
 const view = (state, actions) => {
-  const { fileNames } = state;
-  const { fetchFileNames, replaceFileNames } = actions;
+  const { files } = state;
+  const { fetchFile, replaceFile } = actions;
 
-  const fetchAndReceiveFileNames = () =>
-    fetchFileNames().then(data => replaceFileNames(data));
+  const fetchAndReceiveFile = () =>
+    fetchFile().then(data => replaceFile(data));
 
   return html`
     <div>
       <h1>Stashed</h1>
-      <div oncreate=${fetchAndReceiveFileNames}>
-        ${fileNames.map(fileName => html`
+      <div oncreate=${fetchAndReceiveFile}>
+        ${files.map(file => html`
           <div>
-            <a href=${fileName}>${fileName}</a>
+            <a href=${file.pathName}>${file.fileName}</a>
           </div>
         `)}
       </div>
