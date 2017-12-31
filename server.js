@@ -19,11 +19,12 @@ app.get('/api/files', (req, res) => {
         return;
       }
 
-      const extension = fileName.split('.')[1];
+      const splitByPeriods = fileName.split('.');
+      const extension = splitByPeriods[splitByPeriods.length - 1];
       const pathName = `${process.env['STASHED_DIR_PATH']}/${fileName}`;
 
       // Exclude directories
-      if (typeof extension === 'undefined') {
+      if (splitByPeriods.length === 1) {
         return;
       }
 
