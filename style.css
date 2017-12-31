@@ -6,6 +6,7 @@ html, body {
 
 .menu-container {
   padding: 30px 50px 50px 50px;
+  line-height: 1.5em;
 }
 
 video {
