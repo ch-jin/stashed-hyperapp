@@ -22,9 +22,9 @@ const view = (state, actions) => {
   const fetchAndReceiveFile = () => fetchFile().then(data => replaceFile(data));
 
   return (
-    <div>
+    <div oncreate={fetchAndReceiveFile}>
       {selectedFile.type === 'video' && (
-        <video controls autoplay>
+        <video key={selectedFile.name} controls autoplay>
           <source src={selectedFile.path} />
           {selectedFile.subtitleSrc && (
             <track
@@ -39,7 +39,7 @@ const view = (state, actions) => {
       )}
       <div className="menu-container">
         <h1>Stashed</h1>
-        <div oncreate={fetchAndReceiveFile}>
+        <div>
           {files.map(file => (
             <div>
               <a
