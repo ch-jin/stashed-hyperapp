@@ -1,4 +1,6 @@
 import { h, app } from 'hyperapp';
+import VideoPlayer from './VideoPlayer';
+import FileList from './FileList';
 
 const appState = {
   files: [],
@@ -23,37 +25,10 @@ const view = (state, actions) => {
 
   return (
     <div oncreate={fetchAndReceiveFile}>
-      {selectedFile.type === 'video' && (
-        <video key={selectedFile.name} controls autoplay>
-          <source src={selectedFile.path} />
-          {selectedFile.subtitleSrc && (
-            <track
-              default
-              label="English"
-              kind="subtitles"
-              srclang="en"
-              src={selectedFile.subtitleSrc}
-            />
-          )}
-        </video>
-      )}
+      <VideoPlayer selectedFile={selectedFile} />
       <div className="menu-container">
         <h1>Stashed</h1>
-        <div>
-          {files.map(file => (
-            <div>
-              <a
-                onclick={e => {
-                  e.preventDefault();
-                  selectFile(file);
-                }}
-                href={file.path}
-              >
-                {file.name}
-              </a>
-            </div>
-          ))}
-        </div>
+        <FileList files={files} selectFile={selectFile} />
       </div>
     </div>
   );
