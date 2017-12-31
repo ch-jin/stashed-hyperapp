@@ -37,21 +37,23 @@ const view = (state, actions) => {
           )}
         </video>
       )}
-      <h1>Stashed</h1>
-      <div oncreate={fetchAndReceiveFile}>
-        {files.map(file => (
-          <div>
-            <a
-              onclick={e => {
-                e.preventDefault();
-                selectFile(file);
-              }}
-              href={file.path}
-            >
-              {file.name}
-            </a>
-          </div>
-        ))}
+      <div className="menu-container">
+        <h1>Stashed</h1>
+        <div oncreate={fetchAndReceiveFile}>
+          {files.map(file => (
+            <div>
+              <a
+                onclick={e => {
+                  e.preventDefault();
+                  selectFile(file);
+                }}
+                href={file.path}
+              >
+                {file.name}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
