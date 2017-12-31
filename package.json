@@ -2,14 +2,26 @@
   "name": "stashed-hyperapp",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "dev-fe": "webpack -w",
+    "dev-be": "nodemon server.js",
+    "build": "webpack"
+  },
   "license": "MIT",
   "dependencies": {
+    "ass-to-vtt": "^1.1.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "express": "^4.16.2",
     "hyperapp": "^1.0.0",
-    "webpack": "^3.10.0"
+    "matroska-subtitles": "^2.0.3",
+    "srt-to-vtt": "^1.1.1",
+    "webpack": "^3.10.0",
+    "zero-fill": "^2.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.6"
   }
 }

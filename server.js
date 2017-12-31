@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const VIDEO_EXTENSIONS = require('./videoExtensions.json');
+const VIDEO_EXTENSIONS = require('./constants/videoExtensions.json');
 
 const pathToFiles = path.join(__dirname, process.env['STASHED_DIR_PATH']);
 
@@ -19,11 +19,12 @@ app.get('/api/files', (req, res) => {
         return;
       }
 
-      const extension = fileName.split('.')[1];
+      const splitByPeriods = fileName.split('.');
+      const extension = splitByPeriods[splitByPeriods.length - 1];
       const pathName = `${process.env['STASHED_DIR_PATH']}/${fileName}`;
 
       // Exclude directories
-      if (typeof extension === 'undefined') {
+      if (splitByPeriods.length === 1) {
         return;
       }
 
@@ -31,6 +32,14 @@ app.get('/api/files', (req, res) => {
 
       if (VIDEO_EXTENSIONS.includes(extension)) {
         fileData.type = 'video';
+
+        const subFileName = fileName.replace('.' + extension, '.vtt');
+        const subFilePath = `${pathToFiles}/subtitles/${subFileName}`;
+        if (fs.existsSync(subFilePath)) {
+          fileData.subtitleSrc = `${
+            process.env['STASHED_DIR_PATH']
+          }/subtitles/${subFileName}`;
+        }
       }
 
       data.push(fileData);
