@@ -26,13 +26,13 @@ const view = (state, actions) => {
       {selectedFile.type === 'video' && (
         <video controls autoplay>
           <source src={selectedFile.path} />
-          {selectedFile.subtitles && (
+          {selectedFile.subtitleSrc && (
             <track
               default
               label="English"
               kind="subtitles"
               srclang="en"
-              src="http://localhost:8080/media/kickass.vtt"
+              src={selectedFile.subtitleSrc}
             />
           )}
         </video>
