@@ -1,0 +1,13 @@
+{
+  "S3": {
+    "enabled": true,
+    "endpoint": "",
+    "bucket": "",
+    "directories": [
+      {
+        "path": "",
+        "bucketFolder": ""
+      }
+    ]
+  }
+}
