@@ -2,6 +2,7 @@
   "S3": {
     "enabled": true,
     "endpoint": "",
+    "assetEndpoint": "",
     "bucket": "",
     "directories": [
       {
