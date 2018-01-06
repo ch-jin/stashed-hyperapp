@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const VIDEO_EXTENSIONS = require('./constants/videoExtensions.json');
+const EXCLUDED_EXTENSIONS = require('./constants/excludedExtensions.json');
 const SETTINGS = require('./settings.json');
 const listS3Files = require('./lib/listS3Files');
 
@@ -27,8 +28,12 @@ const readAndSendS3Files = (req, res) => {
       const extension = splitByPeriods[splitByPeriods.length - 1];
       const pathName = `${SETTINGS.S3.assetEndpoint}/${fileName}`;
 
-      // Exclude .vtt
-      if (extension === 'vtt') {
+      if (EXCLUDED_EXTENSIONS.includes(extension)) {
+        return;
+      }
+
+      // Exclude directories
+      if (splitByPeriods.length === 1) {
         return;
       }
 
