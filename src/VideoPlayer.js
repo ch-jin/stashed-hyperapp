@@ -2,7 +2,7 @@ import { h } from 'hyperapp';
 
 export const VideoPlayer = ({ selectedFile }) =>
   selectedFile.type === 'video' ? (
-    <video key={selectedFile.name} controls autoplay>
+    <video key={selectedFile.name} controls autoplay crossorigin="anonymous">
       <source src={selectedFile.path} />
       {selectedFile.subtitleSrc && (
         <track
