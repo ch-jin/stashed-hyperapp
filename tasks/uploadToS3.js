@@ -11,14 +11,12 @@ const { directories, bucket } = SETTINGS.S3;
 setAWSCredentials(AWS);
 const s3Stream = s3UploadStream(new AWS.S3());
 
-const uploadToS3 = bucketData => {
-  const bucketFiles = bucketData.Contents.map(obj => obj.Key);
-
+const uploadToS3 = fileNames => {
   directories.forEach(dir => {
     fs.readdir(path.join(__dirname, dir.path), (err, files) => {
       files.forEach(fileName => {
         const fileDest = dir.bucketFolder + fileName;
-        if (bucketFiles.includes(fileDest)) {
+        if (fileNames.includes(fileDest)) {
           return;
         }
 
