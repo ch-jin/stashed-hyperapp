@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const AWS = require('aws-sdk');
-const s3Stream = require('s3-upload-stream');
-const settings = require('../settings.json');
+const s3UploadStream = require('s3-upload-stream');
+const SETTINGS = require('../settings.json');
 
-const { endpoint, bucket, directories } = settings.s3;
+const { endpoint, bucket, directories } = SETTINGS.s3;
 
 AWS.config.setPromisesDependency(require('bluebird'));
 AWS.config.update({
