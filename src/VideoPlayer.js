@@ -7,7 +7,6 @@ export const VideoPlayer = ({
   selectedFile,
   handlePlayPause,
   toggleFullScreen,
-  handleVideoKeyDown,
 }) => {
   if (selectedFile.type !== 'video') {
     return null;
@@ -18,6 +17,17 @@ export const VideoPlayer = ({
     'video-controls-hide': !isHover,
   });
 
+  const handleKeyDown = ({ key }) => {
+    const vidEle = document.querySelector('video');
+    if (key === 'ArrowRight') {
+      vidEle.currentTime += 30;
+    }
+
+    if (key === 'ArrowLeft') {
+      vidEle.currentTime -= 30;
+    }
+  };
+
   return (
     <div
       onmouseenter={toggleVideoPlayerHover}
@@ -25,10 +35,8 @@ export const VideoPlayer = ({
       className={videoContainerClass}
     >
       <video
-        oncreate={() => {
-          document.removeEventListener('keydown', handleVideoKeyDown);
-          document.addEventListener('keydown', handleVideoKeyDown);
-        }}
+        ondestroy={() => document.removeEventListener('keydown', handleKeyDown)}
+        oncreate={() => document.addEventListener('keydown', handleKeyDown)}
         onprogress={({ currentTarget: { buffered, duration } }) => {
           try {
             const bufferPercent =

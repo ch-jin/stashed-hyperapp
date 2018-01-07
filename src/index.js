@@ -57,17 +57,7 @@ const appActions = {
         isFullScreen: !isFullScreen,
       }),
     };
-  },
-  handleVideoKeyDown: ({ key }) => {
-    const vidEle = document.querySelector('video');
-    if (key === 'ArrowRight') {
-      vidEle.currentTime += 30;
-    }
-
-    if (key === 'ArrowLeft') {
-      vidEle.currentTime -= 30;
-    }
-  },
+  }
 };
 
 const view = (state, actions) => {
