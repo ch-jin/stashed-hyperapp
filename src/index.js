@@ -11,6 +11,7 @@ const appState = {
   },
   videoPlayer: {
     isHover: false,
+    isPlaying: true,
   },
 };
 
@@ -18,11 +19,22 @@ const appActions = {
   fetchFile: () => state => fetch('/api/files').then(res => res.json()),
   replaceFile: files => ({ files }),
   selectFile: file => ({ selectedFile: file }),
-  toggleVideoPlayerHover: () => ({ videoPlayer }) => ({
-    videoPlayer: Object.assign({}, videoPlayer, {
-      isHover: !videoPlayer.isHover,
-    }),
-  }),
+  toggleVideoPlayerHover: () => ({ videoPlayer }) => {
+    const { isHover } = videoPlayer;
+    return {
+      videoPlayer: Object.assign({}, videoPlayer, {
+        isHover: !videoPlayer.isHover,
+      }),
+    };
+  },
+  handlePlayPause: event => ({ videoPlayer }) => {
+    const { isPlaying } = videoPlayer;
+    const videoEle = document.querySelector('video');
+    isPlaying ? videoEle.pause() : videoEle.play();
+    return {
+      videoPlayer: Object.assign({}, videoPlayer, { isPlaying: !isPlaying }),
+    };
+  },
 };
 
 const view = (state, actions) => {
@@ -32,6 +44,7 @@ const view = (state, actions) => {
     replaceFile,
     selectFile,
     toggleVideoPlayerHover,
+    handlePlayPause,
   } = actions;
 
   const fetchAndReceiveFile = () => fetchFile().then(data => replaceFile(data));
@@ -39,6 +52,7 @@ const view = (state, actions) => {
   return (
     <div oncreate={fetchAndReceiveFile}>
       <VideoPlayer
+        handlePlayPause={handlePlayPause}
         toggleVideoPlayerHover={toggleVideoPlayerHover}
         videoPlayer={videoPlayer}
         selectedFile={selectedFile}

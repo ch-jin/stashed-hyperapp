@@ -38,7 +38,7 @@ video::cue {
   align-items: center;
   justify-content: space-between;
   color: white;
-  background-color: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
 }
 
 .video-controls-hide .video-controls {

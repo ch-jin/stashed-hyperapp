@@ -2,9 +2,10 @@ import { h } from 'hyperapp';
 import classNames from 'classnames';
 
 export const VideoPlayer = ({
+  videoPlayer: { isHover, isPlaying },
   toggleVideoPlayerHover,
   selectedFile,
-  videoPlayer: { isHover },
+  handlePlayPause,
 }) => {
   if (selectedFile.type !== 'video') {
     return null;
@@ -35,7 +36,11 @@ export const VideoPlayer = ({
       </video>
       <div className="video-controls">
         <div className="left-controls">
-          <i className="play-pause fa fa-play" />
+          {isPlaying ? (
+            <i onclick={handlePlayPause} className="play-pause fa fa-pause" />
+          ) : (
+            <i onclick={handlePlayPause} className="play-pause fa fa-play" />
+          )}
         </div>
         <div className="right-controls">
           <i className="play-pause fa fa-expand" />
