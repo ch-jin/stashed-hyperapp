@@ -12,6 +12,7 @@ const appState = {
   videoPlayer: {
     isHover: false,
     isPlaying: true,
+    isFullScreen: false,
   },
 };
 
@@ -35,6 +36,18 @@ const appActions = {
       videoPlayer: Object.assign({}, videoPlayer, { isPlaying: !isPlaying }),
     };
   },
+  toggleFullScreen: event => ({ videoPlayer }) => {
+    const { isFullScreen } = videoPlayer;
+    const videoContainer = document.querySelector('.video-container');
+    isFullScreen
+      ? document.webkitExitFullscreen()
+      : videoContainer.webkitRequestFullScreen();
+    return {
+      videoPlayer: Object.assign({}, videoPlayer, {
+        isFullScreen: !isFullScreen,
+      }),
+    };
+  },
 };
 
 const view = (state, actions) => {
@@ -45,6 +58,7 @@ const view = (state, actions) => {
     selectFile,
     toggleVideoPlayerHover,
     handlePlayPause,
+    toggleFullScreen,
   } = actions;
 
   const fetchAndReceiveFile = () => fetchFile().then(data => replaceFile(data));
@@ -52,10 +66,11 @@ const view = (state, actions) => {
   return (
     <div oncreate={fetchAndReceiveFile}>
       <VideoPlayer
-        handlePlayPause={handlePlayPause}
-        toggleVideoPlayerHover={toggleVideoPlayerHover}
         videoPlayer={videoPlayer}
         selectedFile={selectedFile}
+        handlePlayPause={handlePlayPause}
+        toggleFullScreen={toggleFullScreen}
+        toggleVideoPlayerHover={toggleVideoPlayerHover}
       />
       <div className="menu-container">
         <h1>Stashed</h1>

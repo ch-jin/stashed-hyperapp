@@ -6,6 +6,7 @@ export const VideoPlayer = ({
   toggleVideoPlayerHover,
   selectedFile,
   handlePlayPause,
+  toggleFullScreen
 }) => {
   if (selectedFile.type !== 'video') {
     return null;
@@ -43,7 +44,7 @@ export const VideoPlayer = ({
           )}
         </div>
         <div className="right-controls">
-          <i className="play-pause fa fa-expand" />
+          <i onclick={toggleFullScreen} className="play-pause fa fa-expand" />
         </div>
       </div>
     </div>
