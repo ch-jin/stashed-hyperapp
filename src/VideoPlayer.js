@@ -7,6 +7,7 @@ export const VideoPlayer = ({
   selectedFile,
   handlePlayPause,
   toggleFullScreen,
+  handleVideoKeyDown,
 }) => {
   if (selectedFile.type !== 'video') {
     return null;
@@ -24,6 +25,10 @@ export const VideoPlayer = ({
       className={videoContainerClass}
     >
       <video
+        oncreate={() => {
+          document.removeEventListener('keydown', handleVideoKeyDown);
+          document.addEventListener('keydown', handleVideoKeyDown);
+        }}
         onprogress={({ currentTarget: { buffered, duration } }) => {
           try {
             const bufferPercent =
@@ -56,12 +61,12 @@ export const VideoPlayer = ({
       </video>
       <div className="video-controls">
         <div
+          className="progress-container"
           onclick={({ offsetX, currentTarget: { offsetWidth } }) => {
             const seekCoefficient = offsetX / offsetWidth;
             const videoEle = document.querySelector('video');
             videoEle.currentTime = videoEle.duration * seekCoefficient;
           }}
-          className="progress-container"
         >
           <div className="buffer-bar" />
           <div className="progress-bar" />

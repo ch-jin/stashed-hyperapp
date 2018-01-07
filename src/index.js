@@ -58,6 +58,16 @@ const appActions = {
       }),
     };
   },
+  handleVideoKeyDown: ({ key }) => {
+    const vidEle = document.querySelector('video');
+    if (key === 'ArrowRight') {
+      vidEle.currentTime += 30;
+    }
+
+    if (key === 'ArrowLeft') {
+      vidEle.currentTime -= 30;
+    }
+  },
 };
 
 const view = (state, actions) => {
@@ -69,6 +79,7 @@ const view = (state, actions) => {
     toggleVideoPlayerHover,
     handlePlayPause,
     toggleFullScreen,
+    handleVideoKeyDown,
   } = actions;
 
   const fetchAndReceiveFile = () => fetchFile().then(data => replaceFile(data));
@@ -76,6 +87,7 @@ const view = (state, actions) => {
   return (
     <div oncreate={fetchAndReceiveFile}>
       <VideoPlayer
+        handleVideoKeyDown={handleVideoKeyDown}
         videoPlayer={videoPlayer}
         selectedFile={selectedFile}
         handlePlayPause={handlePlayPause}
