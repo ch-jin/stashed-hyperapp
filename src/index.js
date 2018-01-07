@@ -21,7 +21,14 @@ const appActions = {
   replaceFile: files => ({ files }),
   selectFile: file => ({ selectedFile: file }),
   toggleVideoPlayerHover: () => ({ videoPlayer }) => {
-    const { isHover } = videoPlayer;
+    const { isHover, isPlaying } = videoPlayer;
+    if (!isPlaying) {
+      return {
+        videoPlayer: Object.assign({}, videoPlayer, {
+          isHover: true,
+        }),
+      };
+    }
     return {
       videoPlayer: Object.assign({}, videoPlayer, {
         isHover: !videoPlayer.isHover,
@@ -29,11 +36,14 @@ const appActions = {
     };
   },
   handlePlayPause: event => ({ videoPlayer }) => {
-    const { isPlaying } = videoPlayer;
+    const { isHover, isPlaying } = videoPlayer;
     const videoEle = document.querySelector('video');
     isPlaying ? videoEle.pause() : videoEle.play();
     return {
-      videoPlayer: Object.assign({}, videoPlayer, { isPlaying: !isPlaying }),
+      videoPlayer: Object.assign({}, videoPlayer, {
+        isPlaying: !isPlaying,
+        isHover: isHover || !isPlaying,
+      }),
     };
   },
   toggleFullScreen: event => ({ videoPlayer }) => {
