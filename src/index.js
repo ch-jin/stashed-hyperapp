@@ -1,6 +1,8 @@
 import { h, app } from 'hyperapp';
-import VideoPlayer from './VideoPlayer';
+import BasicVideoPlayer from './BasicVideoPlayer';
+import CustomVideoPlayer from './CustomVideoPlayer';
 import FileList from './FileList';
+import SETTINGS from '../settings.json';
 
 const appState = {
   files: [],
@@ -57,7 +59,7 @@ const appActions = {
         isFullScreen: !isFullScreen,
       }),
     };
-  }
+  },
 };
 
 const view = (state, actions) => {
@@ -76,14 +78,19 @@ const view = (state, actions) => {
 
   return (
     <div oncreate={fetchAndReceiveFile}>
-      <VideoPlayer
-        handleVideoKeyDown={handleVideoKeyDown}
-        videoPlayer={videoPlayer}
-        selectedFile={selectedFile}
-        handlePlayPause={handlePlayPause}
-        toggleFullScreen={toggleFullScreen}
-        toggleVideoPlayerHover={toggleVideoPlayerHover}
-      />
+      {SETTINGS.S3.customVideoPlayer ? (
+        <CustomVideoPlayer
+          handleVideoKeyDown={handleVideoKeyDown}
+          videoPlayer={videoPlayer}
+          selectedFile={selectedFile}
+          handlePlayPause={handlePlayPause}
+          toggleFullScreen={toggleFullScreen}
+          toggleVideoPlayerHover={toggleVideoPlayerHover}
+        />
+      ) : (
+        <BasicVideoPlayer selectedFile={selectedFile} />
+      )}
+
       <div className="menu-container">
         <h1>Stashed</h1>
         <FileList files={files} selectFile={selectFile} />

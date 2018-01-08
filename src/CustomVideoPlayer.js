@@ -1,7 +1,7 @@
 import { h } from 'hyperapp';
 import classNames from 'classnames';
 
-export const VideoPlayer = ({
+export const CustomVideoPlayer = ({
   videoPlayer: { isHover, isPlaying },
   toggleVideoPlayerHover,
   selectedFile,
@@ -94,4 +94,4 @@ export const VideoPlayer = ({
   );
 };
 
-export default VideoPlayer;
+export default CustomVideoPlayer;
