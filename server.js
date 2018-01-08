@@ -37,6 +37,13 @@ const readAndSendS3Files = (req, res) => {
         return;
       }
 
+      if (SETTINGS.S3.allowedDirectories) {
+        const dirName = fileName.split('/')[0];
+        if (!SETTINGS.S3.allowedDirectories.includes(dirName)) {
+          return;
+        }
+      }
+
       let fileData = { path: pathName, name: fileName };
 
       if (VIDEO_EXTENSIONS.includes(extension)) {
