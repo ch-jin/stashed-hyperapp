@@ -6,13 +6,13 @@ const SETTINGS = require('../settings.json');
 const listS3Files = require('../lib/listS3Files');
 const setAWSCredentials = require('../lib/setAWSCredentials');
 
-const { directories, bucket } = SETTINGS.S3;
+const { uploadDirectories, bucket } = SETTINGS.S3;
 
 setAWSCredentials(AWS);
 const s3Stream = s3UploadStream(new AWS.S3());
 
 const uploadToS3 = fileNames => {
-  directories.forEach(dir => {
+  uploadDirectories.forEach(dir => {
     fs.readdir(path.join(__dirname, dir.path), (err, files) => {
       files.forEach(fileName => {
         const fileDest = dir.bucketFolder + fileName;
