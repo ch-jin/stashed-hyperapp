@@ -17,7 +17,7 @@
     "babel-preset-env": "^1.6.1",
     "bluebird": "^3.5.1",
     "classnames": "^2.2.5",
-    "express": "^4.16.2",
+    "express": "^4.17.1",
     "hyperapp": "^1.0.0",
     "matroska-subtitles": "^2.0.3",
     "s3-upload-stream": "^1.0.7",
