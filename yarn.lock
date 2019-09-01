@@ -127,9 +127,9 @@ asn1@~0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.3.tgz#dac8787713c9966849fc8180777ebe9c1ddf3b86"
 
-ass-to-vtt@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ass-to-vtt/-/ass-to-vtt-1.1.1.tgz#87a6c048e96628ddd9ba2d501dc19f165ef71211"
+ass-to-vtt@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ass-to-vtt/-/ass-to-vtt-1.2.0.tgz#9db6baf89d663e1218a8743d3874b91399c2092b"
   dependencies:
     duplexify "^3.2.0"
     minimist "^1.1.0"

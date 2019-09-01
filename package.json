@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ass-to-vtt": "^1.1.1",
+    "ass-to-vtt": "^1.2.0",
     "aws-sdk": "^2.176.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
